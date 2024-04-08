@@ -13,8 +13,11 @@ export class SeiService {
   }
 
   async setWhitelist(userAddress: string, amount: bigint) {
-    const txHash = await this.sei.setWhitelist(userAddress, amount);
-    console.log('Set whitelist success at tx', txHash);
+    const txHash: string = await this.sei.setWhitelist(userAddress, amount);
     return txHash;
+  }
+
+  async getWhitelistAmount(userAddress: string) {
+    return await this.sei.whitelist(userAddress);
   }
 }

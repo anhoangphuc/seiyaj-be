@@ -12,3 +12,7 @@ export function randomEmail(): string {
 export function randomPassword(): string {
   return `${randomString(10, true)}`;
 }
+
+export function randomInt(): number {
+  return Math.floor(Math.random() * 1000) + 1;
+}

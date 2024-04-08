@@ -8,4 +8,8 @@ export class ScService {
   async setWhitelist(userAddress: string, amount: bigint) {
     return await this.seiService.setWhitelist(userAddress, amount);
   }
+
+  async getWhitelistAmount(userAddress: string) {
+    return await this.seiService.getWhitelistAmount(userAddress);
+  }
 }

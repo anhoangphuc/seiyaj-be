@@ -4,12 +4,17 @@ import {
   UserAlreadyExistException,
   UserAlreadyLinkAddress,
   UserNotFoundException,
+  UserNotLinkAddressYet,
 } from '../../shares/exceptions/users.exception';
+import { ScService } from '../sc/sc.service';
+import { randomInt } from '../../shares/utils/random-utils';
+import { WeiPerEther } from 'ethers';
+import { sleep } from '../../shares/utils/util';
 
 @Injectable()
 export class UsersService {
   private users: User[] = [];
-  constructor() {
+  constructor(private readonly scService: ScService) {
     this.users.push(
       {
         email: 'john@email.com',
@@ -40,6 +45,10 @@ export class UsersService {
     return user;
   }
 
+  async getUserByEmail(email: string): Promise<User> {
+    return this.users.find((u) => u.email === email);
+  }
+
   async linkETHAddress(email: string, address: string, signature: string): Promise<User> {
     console.log('Signature', signature);
     const user = this.users.find((u) => u.email === email);
@@ -49,5 +58,21 @@ export class UsersService {
     }
     this.users[index] = { ...user, address };
     return this.users[index];
+  }
+
+  async requestWhitelist(email: string) {
+    const user = await this.getUserByEmail(email);
+    if (user.address === null) {
+      throw new UserNotLinkAddressYet(email);
+    }
+    // This amount is random, faked that backend set appropriate amount,
+    // From 1 to 1000 Sei
+    const amount = BigInt(randomInt()) * WeiPerEther;
+    await this.scService.setWhitelist(user.address, amount);
+    return {
+      email,
+      address: user.address,
+      amount,
+    };
   }
 }
