@@ -13,6 +13,7 @@ export class LoginRequestDto {
   })
   email: string;
 
+  @Expose()
   @ApiProperty({
     type: String,
     description: 'Password of user',
