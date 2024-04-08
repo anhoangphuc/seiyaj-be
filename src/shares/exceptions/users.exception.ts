@@ -12,3 +12,9 @@ export class UserAlreadyExistException extends BaseException {
     super(`User with email ${email} already registered`, HttpStatus.BAD_REQUEST);
   }
 }
+
+export class UserAlreadyLinkAddress extends BaseException {
+  constructor(email: string) {
+    super(`User with email ${email} already link address`, HttpStatus.BAD_REQUEST);
+  }
+}
