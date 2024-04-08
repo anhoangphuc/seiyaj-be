@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { User } from './schema/user.schema';
+import { UserAlreadyExistException, UserNotFoundException } from '../../shares/exceptions/users.exception';
 
 @Injectable()
 export class UsersService {
@@ -19,7 +20,7 @@ export class UsersService {
 
   async addNewUser(user: User): Promise<User> {
     if (this.users.find((u) => u.email === user.email)) {
-      throw new Error('User already exists');
+      throw new UserAlreadyExistException(user.email);
     }
     this.users.push(user);
     return user;
@@ -28,7 +29,7 @@ export class UsersService {
   async getUserByEmailAndPassword(email: string, password: string, throwException = true): Promise<User> {
     const user = this.users.find((u) => u.email === email && u.password === password);
     if (!user && throwException) {
-      throw new Error('User not found');
+      throw new UserNotFoundException({ email });
     }
     return user;
   }
