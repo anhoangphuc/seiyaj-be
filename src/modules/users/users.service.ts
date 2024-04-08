@@ -9,7 +9,7 @@ import {
 import { ScService } from '../sc/sc.service';
 import { randomInt } from '../../shares/utils/random-utils';
 import { WeiPerEther } from 'ethers';
-import { sleep } from '../../shares/utils/util';
+import { hashString, isHashEqual } from '../../shares/utils/cryptography';
 
 @Injectable()
 export class UsersService {
@@ -18,12 +18,14 @@ export class UsersService {
     this.users.push(
       {
         email: 'john@email.com',
-        password: 'john',
+        // password: john
+        password: '$2b$10$/fJiwaStbCtO4TOWh.qiqOpjT0LUFiQuN7XyGwawItJe/2FAVMMhy',
         address: null,
       },
       {
         email: 'musk@email.com',
-        password: 'musk',
+        //password: musk
+        password: '$2b$10$nGB8U4xEmqrchANJ/2wks.GjDA6rvCO1mzwhtYQgUFAquKoHuY0j2',
         address: null,
       },
     );
@@ -33,14 +35,16 @@ export class UsersService {
     if (this.users.find((u) => u.email === user.email)) {
       throw new UserAlreadyExistException(user.email);
     }
+    user.password = await hashString(user.password);
     this.users.push({ ...user, address: null });
     return { ...user, address: null };
   }
 
   async getUserByEmailAndPassword(email: string, password: string, throwException = true): Promise<User> {
-    const user = this.users.find((u) => u.email === email && u.password === password);
+    let user = this.users.find((u) => u.email === email);
+    if ((await isHashEqual(password, user.password)) === false) user = null;
     if (!user && throwException) {
-      throw new UserNotFoundException({ email });
+      throw new UserNotFoundException({ email, password });
     }
     return user;
   }

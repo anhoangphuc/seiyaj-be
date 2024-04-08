@@ -25,11 +25,14 @@ export class AuthController {
   })
   @ApiResponse({
     type: LoginResponseDto,
-    status: HttpStatus.OK,
+    status: HttpStatus.CREATED,
     description: 'Successful',
   })
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  async login(@Request() request, @Body() loginRequest: LoginRequestDto): Promise<LoginResponseDto> {
+  async login(
+    @Request() request,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    @Body() loginRequest: LoginRequestDto,
+  ): Promise<LoginResponseDto> {
     const { user } = request;
     const res = await this.authService.login(user);
     return plainToInstance(LoginResponseDto, res);
