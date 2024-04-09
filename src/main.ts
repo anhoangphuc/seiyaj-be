@@ -22,12 +22,7 @@ function setupSwagger(app: INestApplication) {
 
   const document = SwaggerModule.createDocument(app, options);
 
-  try {
-    const outputSwaggerFile = `${process.cwd()}/output-specs/nest-based.json`;
-    fs.writeFileSync(outputSwaggerFile, JSON.stringify(document, null, 2), { encoding: 'utf-8' });
-  } catch (e) {
-    console.warn(`Could not save swagger docs into file`, e);
-  }
-  SwaggerModule.setup('/docs', app, document, { customSiteTitle: `Nest based` });
+  const CSS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.1.0/swagger-ui.min.css';
+  SwaggerModule.setup('/docs', app, document, { customSiteTitle: `Nest based`, customCssUrl: CSS_URL });
 }
 bootstrap();
