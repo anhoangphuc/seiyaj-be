@@ -29,7 +29,7 @@ describe('Auth Service', () => {
   });
 
   it('User login', async () => {
-    const res = await service.login({ email: 'john@email.com' });
+    const res = await service.login({ email: 'john@email.com', address: '0x11' });
     expect(res).toBeDefined();
     expect(res.accessToken).toBeDefined();
   });

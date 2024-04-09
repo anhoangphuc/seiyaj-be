@@ -14,7 +14,7 @@ async function bootstrap() {
 
 function setupSwagger(app: INestApplication) {
   const options = new DocumentBuilder()
-    .setTitle(`Nest Based application`)
+    .setTitle(`SEI application`)
     .setVersion(`1.0`)
     .addBearerAuth()
     .addBasicAuth()

@@ -23,8 +23,13 @@
   [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
 ## Description
+This is the backend repo for the Sei Token projects. Sei Token is a token in the day of airdrop trending, with the features that allow user to send Sei to multiple recipients at once.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+User can register account, login, link address, then request to be whitelisted. We suppose when user request whitelist, the backend system will check carefully whether user is qualified.
+
+After whitelisted successfully, user can call faucet to get some SEI token. Then user can send SEI token to other users.
+
+The operations of register, login, link address, whitelist are served by this backend service.
 
 ## Installation
 
@@ -33,6 +38,13 @@ $ npm install
 ```
 
 ## Running the app
+
+You first to prepare the environment file
+```bash
+$ cp .env.example .env
+```
+
+Then run one of those command
 
 ```bash
 # development
@@ -45,6 +57,9 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+The application will run on port 3000 by default. So the API endpoint will be http://localhost:3000
+
+You are freely to navigate APIs by using the Swagger UI at http://localhost:3000/docs
 ## Test
 
 ```bash
