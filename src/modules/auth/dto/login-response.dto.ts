@@ -12,4 +12,20 @@ export class LoginResponseDto {
   })
   @IsString()
   accessToken: string;
+
+  @Expose()
+  @ApiProperty({
+    type: String,
+    description: 'Email of user',
+    example: 'john@gmail.com',
+  })
+  email: string;
+
+  @Expose()
+  @ApiProperty({
+    type: String,
+    description: 'Email of user',
+    example: 'john@gmail.com',
+  })
+  address: string;
 }

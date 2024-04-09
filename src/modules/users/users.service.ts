@@ -17,13 +17,13 @@ export class UsersService {
   constructor(private readonly scService: ScService) {
     this.users.push(
       {
-        email: 'john@email.com',
+        email: 'john@gmail.com',
         // password: john
         password: '$2b$10$/fJiwaStbCtO4TOWh.qiqOpjT0LUFiQuN7XyGwawItJe/2FAVMMhy',
         address: null,
       },
       {
-        email: 'musk@email.com',
+        email: 'musk@gmail.com',
         //password: musk
         password: '$2b$10$nGB8U4xEmqrchANJ/2wks.GjDA6rvCO1mzwhtYQgUFAquKoHuY0j2',
         address: null,
@@ -42,7 +42,7 @@ export class UsersService {
 
   async getUserByEmailAndPassword(email: string, password: string, throwException = true): Promise<User> {
     let user = this.users.find((u) => u.email === email);
-    if ((await isHashEqual(password, user.password)) === false) user = null;
+    if (user === undefined || (await isHashEqual(password, user.password)) === false) user = null;
     if (!user && throwException) {
       throw new UserNotFoundException({ email, password });
     }

@@ -10,4 +10,12 @@ export class PublicUserInfoResponseDto {
     example: 'john@email.com',
   })
   email: string;
+
+  @Expose()
+  @ApiProperty({
+    type: String,
+    description: 'Email of user',
+    example: 'john@email.com',
+  })
+  address: string;
 }
